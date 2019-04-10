@@ -119,7 +119,7 @@ namespace DatabaseManager_lite
         { // Megnézi hogy helyes e a jelszó úgy, hogy csak egy sort kérdez le, és a táblát eldobja.
             try
             {
-                _ = GetTable("1");
+                GetTable("1");
             }
             catch
             {

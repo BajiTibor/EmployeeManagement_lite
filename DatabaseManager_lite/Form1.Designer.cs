@@ -44,6 +44,7 @@
             this.numericUpDown_limit = new System.Windows.Forms.NumericUpDown();
             this.label13 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txt_mod_phone = new System.Windows.Forms.MaskedTextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.label_CurrentId = new System.Windows.Forms.Label();
             this.button_removeEntity = new System.Windows.Forms.Button();
@@ -71,6 +72,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabPage_inputData = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.txt_add_phone = new System.Windows.Forms.MaskedTextBox();
             this.button_add = new System.Windows.Forms.Button();
             this.txt_add_prof = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -83,8 +85,6 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.txt_add_name = new System.Windows.Forms.TextBox();
-            this.txt_add_phone = new System.Windows.Forms.MaskedTextBox();
-            this.txt_mod_phone = new System.Windows.Forms.MaskedTextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage_DatabaseLogin.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -152,8 +152,10 @@
             this.txt_pass.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_pass.Location = new System.Drawing.Point(597, 409);
             this.txt_pass.Name = "txt_pass";
+            this.txt_pass.PasswordChar = '*';
             this.txt_pass.Size = new System.Drawing.Size(281, 53);
             this.txt_pass.TabIndex = 2;
+            this.txt_pass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Txt_pass_KeyPress);
             // 
             // label3
             // 
@@ -298,6 +300,15 @@
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Adatmódosítás";
+            // 
+            // txt_mod_phone
+            // 
+            this.txt_mod_phone.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_mod_phone.Location = new System.Drawing.Point(112, 93);
+            this.txt_mod_phone.Mask = "(+00) 00 000 0000";
+            this.txt_mod_phone.Name = "txt_mod_phone";
+            this.txt_mod_phone.Size = new System.Drawing.Size(141, 26);
+            this.txt_mod_phone.TabIndex = 16;
             // 
             // label20
             // 
@@ -571,6 +582,15 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Adatfelvétel";
             // 
+            // txt_add_phone
+            // 
+            this.txt_add_phone.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_add_phone.Location = new System.Drawing.Point(307, 314);
+            this.txt_add_phone.Mask = "(+00) 00 000 0000";
+            this.txt_add_phone.Name = "txt_add_phone";
+            this.txt_add_phone.Size = new System.Drawing.Size(334, 53);
+            this.txt_add_phone.TabIndex = 11;
+            // 
             // button_add
             // 
             this.button_add.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -686,24 +706,6 @@
             this.txt_add_name.Name = "txt_add_name";
             this.txt_add_name.Size = new System.Drawing.Size(400, 53);
             this.txt_add_name.TabIndex = 0;
-            // 
-            // txt_add_phone
-            // 
-            this.txt_add_phone.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_add_phone.Location = new System.Drawing.Point(307, 314);
-            this.txt_add_phone.Mask = "(+00) 00 000 0000";
-            this.txt_add_phone.Name = "txt_add_phone";
-            this.txt_add_phone.Size = new System.Drawing.Size(334, 53);
-            this.txt_add_phone.TabIndex = 11;
-            // 
-            // txt_mod_phone
-            // 
-            this.txt_mod_phone.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_mod_phone.Location = new System.Drawing.Point(112, 93);
-            this.txt_mod_phone.Mask = "(+00) 00 000 0000";
-            this.txt_mod_phone.Name = "txt_mod_phone";
-            this.txt_mod_phone.Size = new System.Drawing.Size(141, 26);
-            this.txt_mod_phone.TabIndex = 16;
             // 
             // Form1
             // 

@@ -186,5 +186,13 @@ namespace DatabaseManager_lite
 
             LoadTableContent();
         }
+
+        private void Txt_pass_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                btn_testCon.PerformClick();
+            }
+        }
     }
 }

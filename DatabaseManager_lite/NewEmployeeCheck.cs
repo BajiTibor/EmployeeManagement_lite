@@ -6,7 +6,7 @@ namespace DatabaseManager_lite
     { // Ellenőrzi azt, hogy a dolgozó objektumnak megfelelő változókat adtunk e vagy sem.
         public bool CheckEmployee(Employee employee)
         {
-            var employeeInfo = new List<string>(6)
+            var employeeInfo = new List<string>
             {
                 employee.Name,
                 employee.BirthDate,
@@ -16,7 +16,7 @@ namespace DatabaseManager_lite
                 employee.State,
             };
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < employeeInfo.Count; i++)
             {
                 if (string.IsNullOrWhiteSpace(employeeInfo[i]) || employeeInfo[i].Contains(";"))
                 {
