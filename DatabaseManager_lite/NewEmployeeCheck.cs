@@ -3,7 +3,7 @@
 namespace DatabaseManager_lite
 {
     public class NewEmployeeCheck
-    { // Ellenőrzi azt, hogy a dolgozó objektumnak megfelelő változókat adtunk e vagy sem.
+    {
         public bool CheckEmployee(Employee employee)
         {
             var employeeInfo = new List<string>
@@ -21,7 +21,7 @@ namespace DatabaseManager_lite
                 if (string.IsNullOrWhiteSpace(employeeInfo[i]) || employeeInfo[i].Contains(";"))
                 {
                     return false;
-                } // Nem lehet benne pontosvessző, hiszen ezzel tudnánk lezárni egy SQL kifejezést.
+                }
             }
             
             return true;

@@ -116,7 +116,7 @@ namespace DatabaseManager_lite
         }
 
         public bool IsPasswordCorrect()
-        { // Megnézi hogy helyes e a jelszó úgy, hogy csak egy sort kérdez le, és a táblát eldobja.
+        { 
             try
             {
                 GetTable("1");

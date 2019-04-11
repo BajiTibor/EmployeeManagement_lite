@@ -7,7 +7,7 @@ namespace DatabaseManager_lite
         private readonly CorrectDate _dateCorrection = new CorrectDate();
         public Employee(string id, string name, DateTime birthDate, string phone, string education, string profession,
             string state)
-        { // A dolgozó object, szimplán adatokat tárol ideiglenesen.
+        { 
             Id = id;
             Name = name;
             BirthDate = _dateCorrection.CorrectDateTime(birthDate);

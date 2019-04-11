@@ -2,7 +2,7 @@
 
 namespace DatabaseManager_lite
 {
-    public class CorrectDate // Minden dátumot átír olyan formátumba, amit a MySQL elfogad.
+    public class CorrectDate
     { 
         public string CorrectDateTime(DateTime date)
         {
