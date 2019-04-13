@@ -22,16 +22,16 @@ namespace DatabaseManager_lite
             dateTime_add_dob.MaxDate = DateTime.Now.AddYears(-18);
         }
 
-        private void LoadTableContent()
+        private async void LoadTableContent()
         {
             tabPage_displayData.Enabled = true;
             tabPage_inputData.Enabled = true;
             tabControl1.SelectedIndex = 1;
             tabPage_DatabaseLogin.Enabled = false;
-            dataGridView1.DataSource = _database.GetTable(numericUpDown_limit.Text, _showHidden);
+            dataGridView1.DataSource = await _database.GetTable(numericUpDown_limit.Text, _showHidden);
         }
 
-        private void Btn_testCon_Click(object sender, EventArgs e)
+        private async void Btn_testCon_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txt_pass.Text))
             {
@@ -48,9 +48,9 @@ namespace DatabaseManager_lite
                     txt_pass.Text);
 
 
-                if (_database.IsPasswordCorrect())
+                if (await _database.IsPasswordCorrect())
                 {
-                    if (_database.TableExists())
+                    if (await _database.TableExists())
                     {
                         LoadTableContent();
                     }
@@ -114,7 +114,7 @@ namespace DatabaseManager_lite
                     txt_add_name.Clear();
                     txt_add_phone.Clear();
                     txt_add_prof.Clear();
-                    dateTime_add_dob.Value = DateTime.Now;
+                    dateTime_add_dob.Value = dateTime_add_dob.MaxDate;
                     LoadTableContent();
                 }
                 else
@@ -148,12 +148,12 @@ namespace DatabaseManager_lite
             LoadTableContent();
         }
 
-        private void Txt_nameSearch_TextChanged(object sender, EventArgs e)
+        private async void Txt_nameSearch_TextChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(txt_nameSearch.Text))
             {
                 dataGridView1.DataSource =
-                    _database.GetNameSearch(numericUpDown_limit.Text, txt_nameSearch.Text);
+                    await _database.GetNameSearch(numericUpDown_limit.Text, txt_nameSearch.Text);
             }
             else
             {
@@ -161,10 +161,10 @@ namespace DatabaseManager_lite
             }
         }
 
-        private void Button_search_Click(object sender, EventArgs e)
+        private async void Button_search_Click(object sender, EventArgs e)
         {
             txt_nameSearch.Clear();
-            dataGridView1.DataSource = _database.GetFromTo(numericUpDown_limit.Text, _showHidden,
+            dataGridView1.DataSource = await _database.GetFromTo(numericUpDown_limit.Text, _showHidden,
                 dateTimePicker_from.Value,
                 dateTimePicker_to.Value);
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 
 namespace DatabaseManager_lite
@@ -24,28 +25,28 @@ namespace DatabaseManager_lite
             _connection = new MySqlConnection(defaultString);
         }
 
-        public DataTable GetTable(string limit, string isNull = "")
+        public async Task<DataTable> GetTable(string limit, string isNull = "")
         {
             var sql = $"SELECT * FROM dolgozokSC.data WHERE kilep_datum IS {isNull} NULL LIMIT {limit};";
 
-            _dataTable = FillTable(sql);
+            _dataTable = await FillTable(sql);
 
             foreach (DataRow id in _dataTable.Rows) TakenIdList.Add(int.Parse(id["ID"].ToString()));
 
             return _dataTable;
         }
 
-        public DataTable GetNameSearch(string limit, string name, string isNull = "")
+        public async Task<DataTable> GetNameSearch(string limit, string name, string isNull = "")
         {
             var sql =
                 $"SELECT * FROM dolgozokSC.data WHERE nev LIKE \"%{name}%\" AND kilep_datum IS {isNull} NULL LIMIT {limit};";
 
-            _dataTable = FillTable(sql);
+            _dataTable = await FillTable(sql);
 
             return _dataTable;
         }
 
-        public DataTable GetFromTo(string limit, string isNull, DateTime fromPassed, DateTime toPassed)
+        public async Task<DataTable> GetFromTo(string limit, string isNull, DateTime fromPassed, DateTime toPassed)
         {
             var from = _modifyDate.CorrectDateTime(fromPassed);
             var to = _modifyDate.CorrectDateTime(toPassed);
@@ -53,12 +54,12 @@ namespace DatabaseManager_lite
             var sql =
                 $"SELECT * FROM dolgozoksc.data WHERE belepes BETWEEN \"{from}\" AND \"{to}\" AND kilep_datum IS {isNull} NULL LIMIT {limit};";
 
-            _dataTable = FillTable(sql);
+            _dataTable = await FillTable(sql);
 
             return _dataTable;
         }
 
-        public void CreateSchema()
+        public async void CreateSchema()
         {
             const string sql = @"CREATE SCHEMA dolgozokSC DEFAULT CHARACTER SET utf8 COLLATE
                           utf8_hungarian_ci; CREATE TABLE dolgozokSC.data (
@@ -69,10 +70,10 @@ namespace DatabaseManager_lite
                           modositas DATE NULL, kilep_datum DATE NULL, 
                           PRIMARY KEY (id));";
 
-            ExecuteQuery(sql);
+            await ExecuteQuery(sql);
         }
 
-        public void InsertNewRow(Employee employee)
+        public async void InsertNewRow(Employee employee)
         {
             int newId;
             do
@@ -87,39 +88,39 @@ namespace DatabaseManager_lite
                 $" \"{employee.Phone}\", \"{employee.Education}\", \"{employee.Profession}\"," +
                 $" \"{_modifyDate.CurrentDate()}\", \"{employee.State}\", \"{_modifyDate.CurrentDate()}\", NULL);";
 
-            ExecuteQuery(sql);
+            await ExecuteQuery(sql);
         }
 
-        public bool TableExists()
+        public async Task<bool> TableExists()
         {
             _connection = new MySqlConnection(_connectionString);
             var sql = "SELECT * FROM dolgozokSC.data";
 
-            return ExecuteQuery(sql);
+            return await ExecuteQuery(sql);
         }
 
-        public void SetExit(int userId)
+        public async void SetExit(int userId)
         {
             var sql = $"UPDATE dolgozokSC.data SET kilep_datum = \"{_modifyDate.CurrentDate()}\" WHERE ID = {userId}";
 
-            ExecuteQuery(sql);
+            await ExecuteQuery(sql);
         }
 
-        public void UpdateRecord(Employee employee)
+        public async void UpdateRecord(Employee employee)
         {
             var sql =
                 $"UPDATE dolgozoksc.data SET nev=\"{employee.Name}\", szulido=\"{employee.BirthDate}\", telszam=\"{employee.Phone}\", " +
                 $"vegzettseg=\"{employee.Education}\", szakma=\"{employee.Profession}\", statusz=\"{employee.State}\", modositas=\"{_modifyDate.CurrentDate()}\" " +
                 $"WHERE ID ={employee.Id};";
 
-            ExecuteQuery(sql);
+            await ExecuteQuery(sql);
         }
 
-        public bool IsPasswordCorrect()
+        public async Task<bool> IsPasswordCorrect()
         { 
             try
             {
-                GetTable("1");
+                await GetTable("1");
             }
             catch
             {
@@ -129,14 +130,14 @@ namespace DatabaseManager_lite
             return true;
         }
 
-        private DataTable FillTable(string sql)
+        private async Task<DataTable> FillTable(string sql)
         {
             _dataTable = new DataTable();
-            _connection.Open();
+            await _connection.OpenAsync();
             try
             {
                 _adapter = new MySqlDataAdapter(sql, _connection);
-                _adapter.Fill(_dataTable);
+                await _adapter.FillAsync(_dataTable);
             }
             catch
             {
@@ -144,29 +145,28 @@ namespace DatabaseManager_lite
             }
             finally
             {
-                _connection.Close();
+                await _connection.CloseAsync();
                 _connection.Dispose();
             }
 
             return _dataTable;
         }
 
-        private bool ExecuteQuery(string sql)
+        private async Task<bool> ExecuteQuery(string sql)
         {
             _command = new MySqlCommand(sql, _connection);
-            _connection.Open();
+            await _connection.OpenAsync();
             try
             {
-                _command.ExecuteNonQuery();
+                await _command.ExecuteNonQueryAsync();
             }
-            catch (Exception e)
+            catch
             {
-                Console.WriteLine(e.Message);
                 return false;
             }
             finally
             {
-                _connection.Close();
+                await _connection.CloseAsync();
                 _connection.Dispose();
             }
 
